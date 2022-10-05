@@ -1,6 +1,13 @@
-const { Client } = require('pg');
-const { database } = require('./keys');
+const { Sequelize } = require("sequelize");
 
-const client = new Client(database);
+const { config } = require("./config/config");
+const USER = encodeURIComponent(config.dbUser);
+const PASSWORD = encodeURIComponent(config.dbPassword);
+const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-client.connect(database);
+const sequelize = new Sequelize(URI, {
+  dialect: "postgres",
+  logging: true,
+});
+
+module.exports = sequelize;
