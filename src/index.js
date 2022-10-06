@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(require("./routes/index.routes"));
 app.use("/genres", require("./routes/genres.routes"));
 
+
 app.listen(config.port, () => {
   console.log("server on port:", config.port);
 });
