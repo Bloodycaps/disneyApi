@@ -11,30 +11,37 @@ const MovieSchema = {
   },
   title: {
     allowNull: false,
+    unique: true,
     type: DataTypes.STRING,
   },
   creationDate: {
     allowNull: false,
+    field:"creation_date",
     type: DataTypes.DATE,
   },
   rate: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
   },
   image: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING,
   },
 };
 
 class Movie extends Model {
-  static associate() {}
+  static associate(models) {
+    this.hasMany(models.Genre, {
+      as: "genres",
+      foreignKey: "idMovies",
+    });
+  }
   static config(sequelize) {
     return {
       sequelize,
       tableName: MOVIE_TABLE,
       modelName: "Movie",
-      timestamp: false,
+      timestamps: false,
     };
   }
 }

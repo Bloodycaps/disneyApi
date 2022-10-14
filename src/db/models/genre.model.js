@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
+const { MOVIE_TABLE } = require("./movie.model");
+
 const GENRE_TEBLE = "genres";
 
 const GenreSchema = {
@@ -11,27 +13,37 @@ const GenreSchema = {
   },
   name: {
     allowNull: false,
+    unique: true,
     type: DataTypes.STRING,
   },
   image: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING,
   },
   idMovies: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    field: "movie_id",
+    references: {
+      model: MOVIE_TABLE,
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "SET NULL",
   },
 };
 
 class Genre extends Model {
-  static associate() {}
+  static associate(models) {
+    this.belongsTo(models.Movie, { as: "movie" });
+  }
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: GENRE_TEBLE,
       modelName: "Genre",
-      timestamp: false,
+      timestamps: false,
     };
   }
 }
