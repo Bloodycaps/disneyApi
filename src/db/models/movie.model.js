@@ -16,7 +16,7 @@ const MovieSchema = {
   },
   creationDate: {
     allowNull: false,
-    field:"creation_date",
+    field: "creation_date",
     type: DataTypes.DATE,
   },
   rate: {
