@@ -1,9 +1,15 @@
-const { model } = require("./../libs/sequelize");
+const { models } = require("./../libs/sequelize");
 class GenreService {
   constructor() {}
-  create() {}
+  async create(data) {
+    const newGenre = await models.Genre.create(data);
+    return newGenre;
+  }
 
-  findAll() {}
+  async findAll() {
+    const genres = await models.Genre.findAll();
+    return genres;
+  }
   findById() {}
 
   update() {}
