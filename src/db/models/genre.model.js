@@ -21,7 +21,7 @@ const GenreSchema = {
     type: DataTypes.STRING,
   },
   idMovies: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     field: "movie_id",
     references: {
