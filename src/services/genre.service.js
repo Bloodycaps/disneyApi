@@ -1,14 +1,34 @@
-const { model } = require("./../libs/sequelize");
+const boom = require("@hapi/boom");
+const { models } = require("./../libs/sequelize");
 class GenreService {
   constructor() {}
-  create() {}
 
-  findAll() {}
-  findById() {}
+  async create(data) {
+    const newGenre = await models.Genre.create(data);
+    return newGenre;
+  }
 
-  update() {}
+  async findAll() {
+    const genres = await models.Genre.findAll();
+    return genres;
+  }
+  async findById(id) {
+    const genre = await models.Genre.findByPk(id, {
+      include: ["movie"],
+    });
+    return genre;
+  }
 
-  delete() {}
+  async update(id, changes) {
+    return {
+      id,
+      changes,
+    };
+  }
+
+  async delete(id) {
+    return { id };
+  }
 }
 
 module.exports = GenreService;
