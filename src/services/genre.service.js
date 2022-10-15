@@ -1,6 +1,8 @@
+const boom = require("@hapi/boom");
 const { models } = require("./../libs/sequelize");
 class GenreService {
   constructor() {}
+
   async create(data) {
     const newGenre = await models.Genre.create(data);
     return newGenre;
@@ -10,11 +12,23 @@ class GenreService {
     const genres = await models.Genre.findAll();
     return genres;
   }
-  findById() {}
+  async findById(id) {
+    const genre = await models.Genre.findByPk(id, {
+      include: ["movie"],
+    });
+    return genre;
+  }
 
-  update() {}
+  async update(id, changes) {
+    return {
+      id,
+      changes,
+    };
+  }
 
-  delete() {}
+  async delete(id) {
+    return { id };
+  }
 }
 
 module.exports = GenreService;
